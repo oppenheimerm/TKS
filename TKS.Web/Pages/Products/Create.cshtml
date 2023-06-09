@@ -1,0 +1,63 @@
+﻿@page
+@model TKS.Web.Pages.Products.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" enctype="multipart/form-data">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Product.Title" class="control-label"></label>
+                <input asp-for="Product.Title" class="form-control" />
+                <span asp-validation-for="Product.Title" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Product.Description" class="control-label"></label>
+                <input asp-for="Product.Description" class="form-control" />
+                <span asp-validation-for="Product.Description" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Product.CategoryId" class="control-label"></label>
+                <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+                <select asp-for="Product.CategoryId" asp-items="new SelectList(Model.Product.Categories,
+                    nameof(Models.Category.Id), nameof(Models.Category.Name))">
+                    <option>Please Select</option>
+                </select>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Product.Price" class="control-label"></label>
+                <input asp-for="Product.Price" class="form-control" />
+                <span asp-validation-for="Product.Price" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Product.Photo" class="control-label"></label>
+                <input asp-for="Product.Photo" class="form-control" />
+                <span asp-validation-for="Product.Photo" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
