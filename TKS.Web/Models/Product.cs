@@ -17,12 +17,15 @@ namespace TKS.Web.Models
         public string? Title { get; set; }
 
         [Required]
+        [ForeignKey("Categoy")]
+        public int? CategoryId { get; set; }
+
         public Category? Category { get; set; }
         
         public PhotoEntity? Photo { get; set; }
         public int? Likes { get; set; }
 
-        public DateTime Created { get; set; } = DateTime.Now;
+        public DateTime? Created { get; set; } = DateTime.Now;
 
         [Column(TypeName = "money")]
         public decimal? Price { get; set; }

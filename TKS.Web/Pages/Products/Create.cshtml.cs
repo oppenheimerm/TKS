@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using TKS.Web.Models;
-using TKS.Web.Data;
 using TKS.Web.UseCases;
 using TKS.Web.ViewModels;
+using TKS.Web.Repositories;
+using TKS.Web.Models;
 
 namespace TKS.Web.Pages.Products
 {
@@ -17,13 +13,22 @@ namespace TKS.Web.Pages.Products
         private readonly IGetAllCategories GetAllCategoriesUseCase;
         private readonly IAddProductPhotoUseCase AddProductPhotoUseCase;
         private readonly IAddFolderUseCase AddFolderUseCase;
+        private readonly IAddFolderDbEntityUseCase AddFolderDbEntityUseCase;
+        private readonly IAddPhotoDbEntityUseCase AddPhotoDbEntityUseCase;
+        private readonly IAddProductUseCase AddProductUseCase;
+        private readonly IUpdateProductUseCase UpdateProductUseCase;
 
         public CreateModel(IGetAllCategories getAllCategoriesUseCase, IAddProductPhotoUseCase addProductPhotoUseCase,
-            IAddFolderUseCase addFolderUseCase)
+            IAddFolderUseCase addFolderUseCase, IAddFolderDbEntityUseCase addFolderDbEntityUseCase, 
+            IAddPhotoDbEntityUseCase addPhotoDbEntityUseCase, IAddProductUseCase addProductUseCase, IUpdateProductUseCase updateProductUseCase)
         {
             GetAllCategoriesUseCase = getAllCategoriesUseCase;
             AddProductPhotoUseCase = addProductPhotoUseCase;
             AddFolderUseCase = addFolderUseCase;
+            AddFolderDbEntityUseCase = addFolderDbEntityUseCase;
+            AddPhotoDbEntityUseCase = addPhotoDbEntityUseCase;
+            AddProductUseCase = addProductUseCase;
+            UpdateProductUseCase = updateProductUseCase;
         }
 
         public IActionResult OnGet()
@@ -40,28 +45,75 @@ namespace TKS.Web.Pages.Products
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || Product == null)
+          if (!ModelState.IsValid || Product == null || Product.Photo == null)
             {
                 Product = new();
                 Product.Categories = GetAllCategoriesUseCase.Execute().ToList();
                 return Page();
             }
 
-            //   Add Folder
-            var folder = await AddFolderUseCase.ExecuteAsync();
-            if (folder.Success)
-            {
-                // Add Photo
-                await AddProductPhotoUseCase.ExecuteAsync(Product.Photo, folder.DirectoryInfo.Name);
+            // Got to add product!! 
+            var product = await AddProductUseCase.ExecuteAsync(Product.ToProduct());
+            if(product.success == true) {
+                var folder = await AddFolderUseCase.ExecuteAsync();
+                if (folder.Success)
+                {
+                    //  Add folder database entity
+                    var folderDbEntity = await AddFolderDbEntityUseCase.ExecuteAsync(folder.DirectoryInfo.ToFolderDbEntity());
+                    if (folderDbEntity.Success)
+                    {
 
-                //_context.Product.Add(Product);
-                //await _context.SaveChangesAsync();
+                        // Add Photo(physical)
+                        var photo = await AddProductPhotoUseCase.ExecuteAsync(Product.Photo, folder.DirectoryInfo.Name);
+                        if (photo.Success)
+                        {
+                            //  Add photoDb
+                            PhotoEntity newPhoto = new PhotoEntity()
+                            {
+                                Name = photo.FileInfo.Name,
+                                DisplayName = Path.GetFileNameWithoutExtension(photo.FileInfo.Name),
+                                FolderId = folderDbEntity.FolderDbEntity.Id,
+                            };
 
-                return RedirectToPage("./Index");
+                            var photoEntity = await AddPhotoDbEntityUseCase.ExecuteAsync(newPhoto);
+                            if (photoEntity.Success)
+                            {
+                                //  update the photofile
+                                product.Product.Photo = photoEntity.PhotoEntity;
+                                await UpdateProductUseCase.ExecuteAsync(product.Product);
+                                return RedirectToPage("./Index");
+                            }
+                            else
+                            {
+                                //  Inernal server error
+                                return StatusCode(500);
+                            }
+                        }
+                        else
+                        {
+                            //  Inernal server error
+                            return StatusCode(500);
+                        }
+
+                    }
+                    else
+                    {
+                        //  Inernal server error
+                        return StatusCode(500);
+                    }
+
+
+                }
+                else
+                {
+                    //  Inernal server error
+                    return StatusCode(500);
+                }
             }
             else
             {
-                //  could not add folder
+                Product = new();
+                Product.Categories = GetAllCategoriesUseCase.Execute().ToList();
                 return Page();
             }
 

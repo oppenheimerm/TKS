@@ -17,5 +17,28 @@ namespace TKS.Web.ViewModels
                 CategoryDescription = vm.CategoryDescription
             };
         }
+
+        public static FolderEntity ToFolderDbEntity(this DirectoryInfo di)
+        {
+            return new FolderEntity
+            {
+                FolderName = di.Name,
+                Timestamp = di.CreationTime,
+                AbsolutePath = di.FullName,
+            };
+        }
+
+        public static Product ToProduct(this AddProductVM vm)
+        {
+            return new Product
+            {
+                Description = vm.Description,
+                Title = vm.Title,
+                CategoryId = vm.CategoryId,
+                Created = vm.Created,
+                Price = vm.Price,
+                StockCount = vm.StockCount
+            };
+        }
     }
 }

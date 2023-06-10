@@ -7,26 +7,24 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using TKS.Web.Models;
 using TKS.Web.Data;
+using TKS.Web.UseCases;
 
 namespace TKS.Web.Pages.Products
 {
     public class IndexModel : PageModel
     {
-        private readonly TKS.Web.Data.ApplicationDbContext _context;
+        private readonly IGetAllProductUseCase GetAllProductsUseCase;
 
-        public IndexModel(TKS.Web.Data.ApplicationDbContext context)
+        public IndexModel(IGetAllProductUseCase getAllProductsUseCase)
         {
-            _context = context;
+            GetAllProductsUseCase = getAllProductsUseCase;
         }
 
         public IList<Product> Product { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.Product != null)
-            {
-                Product = await _context.Product.ToListAsync();
-            }
+            Product = await GetAllProductsUseCase.ExecuteAsync();            
         }
     }
 }

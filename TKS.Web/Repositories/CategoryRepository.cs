@@ -15,7 +15,7 @@ namespace TKS.Web.Repositories
             Context = context;
         }
 
-        public async Task<(Category, bool Success, string ErrorMessage)>Add(Category category){
+        public async Task<(Category Category, bool Success, string ErrorMessage)>Add(Category category){
             try
             {
                 category.CategoyCode = category.CategoyCode.ToUpperInvariant();

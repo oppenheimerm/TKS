@@ -218,8 +218,9 @@ namespace TKS.Web.Migrations
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     PhotoId = table.Column<int>(type: "int", nullable: true),
                     Likes = table.Column<int>(type: "int", nullable: true),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Price = table.Column<decimal>(type: "money", nullable: true)
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Price = table.Column<decimal>(type: "money", nullable: true),
+                    StockCount = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
