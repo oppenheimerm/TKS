@@ -20,6 +20,8 @@ builder.Services.AddSingleton<ImageProcessor>();
 //  Repositories
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IFolderDbEntityRepository, FolderDbEntityRepository>();
+builder.Services.AddScoped<IPhotoDbEntityRepository, PhotoDbEntityRepository>();
 
 //  Usercases
 builder.Services.AddTransient<IAddProductUseCase, AddProduct>();
@@ -28,6 +30,10 @@ builder.Services.AddTransient<IGetAllCategories, GetAllCategories>();
 builder.Services.AddTransient<ICategoryCodeUniqueUseCase, CategoryCodeUniqueUseCase>();
 builder.Services.AddTransient<IAddProductPhotoUseCase, AddProductPhotoUseCase>();
 builder.Services.AddTransient<IAddFolderUseCase, AddFolderUseCase>();
+builder.Services.AddTransient<IAddFolderDbEntityUseCase, AddFolderDbEntityUseCase>();
+builder.Services.AddTransient<IAddPhotoDbEntityUseCase, AddPhotoDbEntityUseCase>();
+builder.Services.AddTransient<IUpdateProductUseCase, UpdateProductUseCase>();
+builder.Services.AddTransient<IGetAllProductUseCase, GetAllProductUseCase>();
 
 
 builder.Services.AddScoped<IPhotoFileRepository, PhotoFileRepository>();

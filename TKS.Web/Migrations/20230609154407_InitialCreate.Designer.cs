@@ -12,7 +12,7 @@ using TKS.Web.Data;
 namespace TKS.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230608151155_InitialCreate")]
+    [Migration("20230609154407_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -314,10 +314,11 @@ namespace TKS.Web.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
+                    b.Property<int?>("CategoryId")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Created")
+                    b.Property<DateTime?>("Created")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -333,6 +334,9 @@ namespace TKS.Web.Migrations
 
                     b.Property<decimal?>("Price")
                         .HasColumnType("money");
+
+                    b.Property<int?>("StockCount")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()

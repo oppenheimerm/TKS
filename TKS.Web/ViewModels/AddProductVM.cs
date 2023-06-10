@@ -18,7 +18,7 @@ namespace TKS.Web.ViewModels
 
         public List<Category>? Categories { get; set; }
 
-        public DateTime? Created { get; set; }
+        public DateTime? Created { get; set; } = DateTime.Now;
 
         [Required]
         public decimal? Price { get; set; }

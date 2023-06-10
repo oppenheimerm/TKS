@@ -24,7 +24,7 @@ namespace TKS.Web.Models
         /// </summary>
         [Required]
         public string DisplayName { get; set; } = string.Empty;
-        [Required]
+
         public string UrlName
         {
             get
