@@ -1,6 +1,14 @@
+html, body {
+    font-family: 'Sofia Sans Condensed', sans-serif;
+    color: #202124;
+    background-color: #f2f2f2;
+}
+
 html {
   font-size: 14px;
 }
+
+
 
 @media (min-width: 768px) {
   html {
@@ -19,4 +27,12 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+
+/* Index */
+
+
+.add-bx-shadow {
+    box-shadow: inset 0px 3px 8px -4px rgba(0,0,0,0.07)
 }

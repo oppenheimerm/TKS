@@ -12,8 +12,8 @@ using TKS.Web.Data;
 namespace TKS.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230609154407_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230610141540_Category_Name_Length")]
+    partial class Category_Name_Length
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

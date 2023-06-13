@@ -5,7 +5,7 @@ namespace TKS.Web.ViewModels
     public class AddCategoryVM
     {
         [Required]
-        [MaxLength(25, ErrorMessage = "Maximum 25 characters long.")]
+        [MaxLength(35, ErrorMessage = "Maximum 35 characters long.")]
         public string? Name { get; set; }
 
         [Required]
