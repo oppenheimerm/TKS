@@ -34,6 +34,8 @@ builder.Services.AddTransient<IAddFolderDbEntityUseCase, AddFolderDbEntityUseCas
 builder.Services.AddTransient<IAddPhotoDbEntityUseCase, AddPhotoDbEntityUseCase>();
 builder.Services.AddTransient<IUpdateProductUseCase, UpdateProductUseCase>();
 builder.Services.AddTransient<IGetAllProductUseCase, GetAllProductUseCase>();
+builder.Services.AddTransient<IGetCategory, GetCategory>();
+builder.Services.AddTransient<IEditCategory, EditCategory>();
 
 
 builder.Services.AddScoped<IPhotoFileRepository, PhotoFileRepository>();

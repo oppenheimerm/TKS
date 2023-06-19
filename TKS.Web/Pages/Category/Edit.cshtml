@@ -1,0 +1,33 @@
+﻿@page "{id}"
+@model TKS.Web.Pages.Category.EditModel
+@{
+	ViewData["Title"] = $"Edit item: {Model.Category.Name}";
+}
+
+<section class="section" id="edit_category">
+	<div class="container flex">
+		<form id="form_edit-create" method="post" action="">
+			<div asp-validation-summary="All" class="text-danger"></div>
+			<input type="hidden" asp-for="Category.Id" />
+			<fieldset class="field__set">
+				<legend class="form__legend">Edit Category: @Model.Category.Name</legend>
+				<div class="form__margin">
+					<label asp-for="Category.Name" class="control-label"></label>
+					<input asp-for="Category.Name" class="form__input" placeholder="Category name" aria-label="Category name" />
+					<span asp-validation-for="Category.Name" class="text-danger"></span>
+				</div>
+				<div class="form__margin">
+					<label asp-for="Category.CategoryDescription" class="control-label"></label>
+					<input asp-for="Category.CategoryDescription" class="form__input" placeholder="Category description" aria-label="Category code" />
+					<span asp-validation-for="Category.CategoryDescription" class="text-danger"></span>
+				</div>
+
+				<div class="form__margin">
+					<input type="submit" valuse="SUBMIT" class="btn btn__default form__button" />
+				</div>
+
+			</fieldset>
+		</form>
+	</div>
+
+</section>

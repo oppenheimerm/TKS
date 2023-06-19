@@ -2,66 +2,62 @@
 @model TKS.Web.Pages.Products.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Add a new product";
 }
 
-<h1>Create</h1>
-
-<h4>Product</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post" enctype="multipart/form-data">
-
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Product.Title" class="control-label"></label>
-                <input asp-for="Product.Title" class="form-control" />
-                <span asp-validation-for="Product.Title" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <label asp-for="Product.Description" class="control-label"></label>
-                <input asp-for="Product.Description" class="form-control" />
-                <span asp-validation-for="Product.Description" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <label asp-for="Product.CategoryId" class="control-label"></label>
-                <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
-                <select asp-for="Product.CategoryId" asp-items="new SelectList(Model.Product.Categories,
+<section class="section" id="all_products">
+    <div class="allposts__wrap container flex">
+        <p class="section__label touppersection__label">Products</p>
+        <form id="form_edit-create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <fieldset class="field__set">
+                <legend class="form__legend">Add a new product item</legend>
+                <div class="form__margin">
+                    <label asp-for="Product.Title" class="control-label"></label>
+                    <input asp-for="Product.Title" class="form__input" placeholder="Prduct title" aria-label="Product title" />
+                    <span asp-validation-for="Product.Title" class="text-danger"></span>
+                </div>
+                <div class="form__margin">
+                    <label asp-for="Product.Description" class="control-label"></label>
+                    <input asp-for="Product.Description" class="form__input" placeholder="Product description" aria-label="Product description" />
+                    <span asp-validation-for="Product.Description" class="text-danger"></span>
+                </div>
+                <div class="form__margin">
+                    <label asp-for="Product.CategoryId" class="control-label"></label>
+                    <select asp-for="Product.CategoryId" class="form__selectlist" asp-items="new SelectList(Model.Product.Categories,
                     nameof(Models.Category.Id), nameof(Models.Category.Name))">
-                    <option>Please Select</option>
-                </select>
-            </div>
-            <br />
-            <div class="form-group">
-                <label asp-for="Product.Price" class="control-label"></label>
-                <input asp-for="Product.Price" class="form-control" />
-                <span asp-validation-for="Product.Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Product.StockCount" class="control-label"></label>
-                <input asp-for="Product.StockCount" class="form-control" />
-                <span asp-validation-for="Product.StockCount" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <label asp-for="Product.Photo" class="control-label"></label>
-                <input asp-for="Product.Photo" class="form-control" />
-                <span asp-validation-for="Product.Photo" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+                        <option>Please Select</option>
+                    </select>
+                    <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+                </div>
+                <div class="form__margin">
+                    <label asp-for="Product.Price" class="control-label"></label>
+                    <input asp-for="Product.Price" class="form__input" placeholder="Product price" aria-label="Product price" />
+                    <span asp-validation-for="Product.Price" class="text-danger"></span>
+                </div>
+                <div class="form__margin">
+                    <label asp-for="Product.StockCount" class="control-label"></label>
+                    <input asp-for="Product.StockCount" class="form__input" placeholder="Product stock count" aria-label="Product stock count" />
+                    <span asp-validation-for="Product.StockCount" class="text-danger"></span>
+                </div>
+                <div class="form__margin">
+                    <label asp-for="Product.Photo" class="control-label"></label>
+                    <input asp-for="Product.Photo" class="form__input" placeholder="Product photo" aria-label="Product photo" />
+                    <span asp-validation-for="Product.Photo" class="text-danger"></span>
+                </div>
+                <div class="form__margin">
+                    <input type="submit" valuse="SUBMIT" class="btn btn__default form__button" />
+                </div>
+            </fieldset>
         </form>
-    </div>
-</div>
 
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
+        <br />
+        <div>
+            <a asp-page="Index">Back to List</a>
+        </div>
+    </div>
+</section>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

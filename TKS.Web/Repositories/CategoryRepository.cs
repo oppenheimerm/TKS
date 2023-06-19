@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SkiaSharp;
 using TKS.Web.Data;
 using TKS.Web.Models;
 
@@ -45,5 +46,26 @@ namespace TKS.Web.Repositories
 
             return (codeInUse == null) ? true : false;
         }
+
+        public async Task<Category?>Get(int id)
+        {
+            return await Context.Category.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
+        }
+
+        public async Task<(Category Category, bool Success, string ErrorMessage)>Edit(Category category)
+        {
+
+            try
+            {
+                Context.Category.Update(category);
+				await Context.SaveChangesAsync();
+                return (category, true, string.Empty);
+			}
+			catch (DbUpdateException /* ex */)
+			{
+				Logger.LogError($"Failed to update an instance of Category at: {DateTime.UtcNow}");
+                return (new Category(), false, $"Failed to update an instance of Category at: {DateTime.UtcNow}");
+			}
+		}
     }
 }
