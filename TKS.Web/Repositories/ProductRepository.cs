@@ -48,6 +48,7 @@ namespace TKS.Web.Repositories
         {
             return await Context.Product
                 .Include( p => p.Photo).ThenInclude( f => f.Folder)
+                .Include( c => c.Category)
                 .AsNoTracking()
                 .ToListAsync();
         }

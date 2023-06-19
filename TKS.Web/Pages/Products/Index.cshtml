@@ -2,53 +2,58 @@
 @model TKS.Web.Pages.Products.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "View all products";
 }
 
-<h1>Index</h1>
+<section class="section" id="all_products">
+    <div class="allposts__wrap container flex">
+        <p class="section__label touppersection__label">Products</p>
+        <a class="page__links" asp-page="./Create">New</a>
+        <table class="table table__middle">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Photo</th>
+                    <th>Title</th>
+                    <th>Category Code</th>
+                    <th>Price</th>
+                    <th>Stock Count</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Product)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            <img photo="@item.Photo" Type="Thumbnail" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Category.CategoyCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StockCount)
+                        </td>
+                        <td>
+                            <div class="table__actions-wrap">
+                                <a class="btn btn__small" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                                <a class="btn btn__small" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                                <a class="btn btn__small" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Photo
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product[0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product[0].Price)                
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product[0].StockCount)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Product) {
-        <tr>
-            <td>
-                <img photo="@item.Photo" Type="Thumbnail" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)                
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StockCount)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+            </tbody>
+        </table>
+    </div>
+</section>

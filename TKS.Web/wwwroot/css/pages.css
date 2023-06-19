@@ -1,0 +1,25 @@
+﻿/*
+    Index
+*/
+
+.welcome__inner-wrap h1 {
+    font-size: var(--biggest-font-size);
+    text-align: center;
+    line-height: 1;
+    padding: 50px 0;
+}
+
+
+/*
+    Admin
+
+        /Category/Edit
+*/
+
+/* Category/Edit */
+#edit_category .container,
+#all_category .container,
+#all_products .container,
+#add_category .container{
+    flex-direction: column;
+}

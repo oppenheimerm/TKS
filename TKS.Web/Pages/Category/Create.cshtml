@@ -5,39 +5,41 @@
     ViewData["Title"] = "Add Categort";
 }
 
-<h1>Create</h1>
-
-<h4>Category</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="AddCategoryVM.Name" class="control-label"></label>
-                <input asp-for="AddCategoryVM.Name" class="form-control" />
-                <span asp-validation-for="AddCategoryVM.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AddCategoryVM.CategoyCode" class="control-label"></label>
-                <input asp-for="AddCategoryVM.CategoyCode" class="form-control" />
-                <span asp-validation-for="AddCategoryVM.CategoyCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AddCategoryVM.CategoryDescription" class="control-label"></label>
-                <input asp-for="AddCategoryVM.CategoryDescription" class="form-control" />
-                <span asp-validation-for="AddCategoryVM.CategoryDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+<section class="section" id="add_category">
+    <div class="container flex">
+        <form id="form_add_category" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <fieldset class="field__set">
+                <legend class="form__legend">Add a new category</legend>
+                <div class="form__margin">
+                    <label asp-for="AddCategoryVM.Name" class="control-label"></label>
+                    <input asp-for="AddCategoryVM.Name" class="form__input" placeholder="Category name" aria-label="Category name" />
+                    <span asp-validation-for="AddCategoryVM.Name" class="text-danger"></span>
+                </div>
+                <div class="form__margin">
+                    <label asp-for="AddCategoryVM.CategoyCode" class="control-label"></label>
+                    <input asp-for="AddCategoryVM.CategoyCode" class="form__input" placeholder="Category code(required)" aria-label="Category code (required)" />
+                    <span asp-validation-for="AddCategoryVM.CategoyCode" class="text-danger"></span>
+                </div>
+                <div class="form__margin">
+                    <label asp-for="AddCategoryVM.CategoryDescription" class="control-label"></label>
+                    <input asp-for="AddCategoryVM.CategoryDescription" class="form__input" placeholder="Category description" aria-label="Category description" />
+                    <span asp-validation-for="AddCategoryVM.CategoryDescription" class="text-danger"></span>
+                </div>
+                <div class="form__margin">
+                    <input type="submit" valuse="SUBMIT" class="btn btn__default form__button" />
+                </div>
+            </fieldset>
         </form>
-    </div>
-</div>
 
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
+        <div>
+            <a asp-page="Index">Back to List</a>
+        </div>
+
+    </div>
+</section>
+
+
 
 @section Scripts {
     @{
