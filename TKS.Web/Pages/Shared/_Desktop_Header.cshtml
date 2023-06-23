@@ -13,9 +13,12 @@
                         <li class="dsktop__nav-link-item"><a lass="nav-link text-dark" asp-area="" asp-page="/About">About</a></li>
                         <li class="dsktop__nav-link-item"><a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
+                        <partial name="_LoginPartial" />
                         @if (!User.Identity.IsAuthenticated)
-                        {
-                            <li class="dsktop__nav-link-item"><a asp-page="/Account/Login">Login</a></li>
+                        {                            
+                            <li class="dsktop__nav-link-item">
+                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                            </li>
                         }
 
                     </ul>
@@ -59,6 +62,15 @@
                                     </span>
                                     Sign Out
                                 </a>
+
+
+
+                                <div class="dsktop-logout">
+                                    <form  asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post" >
+                                            
+                                        <button type="submit" class="nav-link btn btn.btn__small btn-link text-dark">Logout</button>
+                                    </form>
+                                </div>
 
                             </div>
                         </div>

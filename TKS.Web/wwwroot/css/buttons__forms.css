@@ -217,6 +217,33 @@ button[disabled]{
     margin: 1rem auto; /* 16px auto */
 }
 
+/*=============== 
+    The Description List element (dl)
+===============*/
+.disc__list {
+    display: flex;
+    width: 100%;
+    margin: 0 auto;
+    flex-direction: column;
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    box-shadow: 0px 3px 8px -4px rgba(0,0,0,0.15);
+    margin-bottom: var(--mb-1);
+    background-color: #ffffff;
+    padding: var(--mb-1);
+    border-radius: 8px;
+}
+
+.disc__list .disc__list-title {
+    font-size: var(--h3-font-size);
+    font-weight: var(--font-bold);
+    margin-bottom: var(--mb-0-75);
+}
+
+.disc__list .disc__list-item{
+    margin-left: var(--mb-1-5);
+    font-size: var(--normal-font-size);
+}
+
 
 /*=============== 
     Admin / Login

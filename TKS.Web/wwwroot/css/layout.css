@@ -1,7 +1,8 @@
 ﻿/*=============== 
     1. Shared Css classes.
     2. Mobile header / Desktop
-    3. Footer
+    3 Admin header
+    4. Footer
     4. Art gallery
 
 =============================*/
@@ -183,7 +184,80 @@ line-height: 1.4;
     color: var(--body-color-highlight);
 }
 
-/* 3 Footer. */
+/* 3 Admin header */
+.admin__actions-wrap {
+    width: auto;
+}
+
+.admin__btn {
+    background-color: var(--accent-color);
+    color: var(--body-color);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    column-gap: 0.5rem; /* 8px */
+    padding: 0.5rem; /* 8px */
+    cursor: pointer;
+    border-radius: 8px;
+    border: none;
+    box-shadow: var(--box-shadow);
+    position: relative;
+}
+
+.dropdown {
+    position: absolute;
+    width: 250px;
+    box-shadow: var(--box-shadow);
+    border-radius: 8px;
+    margin-top: 0.3rem;
+    background: white;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(0.5rem);
+    transition: all 0.1s cubic-bezier(0.16, 1, 0.5, 1);
+}
+
+.dropdown a,
+.dropdown .dsktop-logout{
+  display: flex;
+  align-items: center;
+  column-gap: var(--gap);
+  padding: 0.8rem 1rem;
+  text-decoration: none;
+  color: black;
+}
+
+.dropdown a span{
+    margin-right: 8px;
+    text-decoration: none;
+}
+
+.dropdown a:hover
+{
+    color: var(--accent-color);
+    font-weight: var(--font-bold);
+}
+
+.dsktop-logout form > button{
+    border: none;
+}
+
+.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0rem);
+    right: 0;
+    top: 80px; /* clear navbar */
+}
+
+.arrow {
+    transform: rotate(180deg);
+    transition: 0.2s ease;
+}
+
+
+
+/* 4 Footer. */
 footer {
     color: #fff;
     background-color: var(--body-color-highlight);

@@ -10,8 +10,8 @@ namespace TKS.Web.UseCases.ProductsUseCase
         {
             ProductRepository = productRepository;
         }
-
-        public async Task<(Product? Product, bool success, string ErrorMessage)>ExecuteAsync(Product product)
+                
+        public async Task<(Product Product, bool success, string ErrorMessage)>ExecuteAsync(Product product)
         {
             var response = await ProductRepository.Add(product);
             return response;

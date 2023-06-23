@@ -1,0 +1,45 @@
+﻿@page
+@model TKS.Web.Pages.Category.DetailsModel
+@{
+	ViewData["Title"] = $"View category details: {Model.Category.Name} ";
+}
+
+<section class="section" id="details_category">
+    <div class="container flex">
+        <dl class="disc__list">
+            <dt class="disc__list-title">
+                @Html.DisplayNameFor(model => model.Category.Id)
+            </dt>
+            <dd class="disc__list-item">
+                @Html.DisplayFor(model => model.Category.Id)
+            </dd>
+
+            <dt class="disc__list-title">
+                @Html.DisplayNameFor(model => model.Category.Name)
+            </dt>
+            <dd class="disc__list-item">
+                @Html.DisplayFor(model => model.Category.Name)
+            </dd>
+
+            <dt class="disc__list-title">
+                @Html.DisplayNameFor(model => model.Category.CategoyCode)
+            </dt>
+            <dd class="disc__list-item">
+                @Html.DisplayFor(model => model.Category.CategoyCode)
+            </dd>
+
+            <dt class="disc__list-title">
+                @Html.DisplayNameFor(model => model.Category.CategoryDescription)
+            </dt>
+            <dd class="disc__list-item">
+                @Html.DisplayFor(model => model.Category.CategoryDescription)
+            </dd>
+
+        </dl>
+        <div>
+            <a class="btn btn__small" asp-page="Index">Back to List</a> <br /> 
+            <a class="btn btn__small" asp-page="/Products/ByCategory" asp-route-id="@Model.Category.Id" >View products</a>
+        </div>
+    </div>
+</section>
+

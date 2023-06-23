@@ -36,6 +36,8 @@ builder.Services.AddTransient<IUpdateProductUseCase, UpdateProductUseCase>();
 builder.Services.AddTransient<IGetAllProductUseCase, GetAllProductUseCase>();
 builder.Services.AddTransient<IGetCategory, GetCategory>();
 builder.Services.AddTransient<IEditCategory, EditCategory>();
+builder.Services.AddTransient<IGetProductUseCase, GetProduct>();
+builder.Services.AddTransient<IViewByCategory, ViewByCategory>();
 
 
 builder.Services.AddScoped<IPhotoFileRepository, PhotoFileRepository>();
@@ -72,7 +74,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     // Cookie settings
     options.Cookie.HttpOnly = true;
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+    options.ExpireTimeSpan = TimeSpan.FromDays(60);
 
     options.LoginPath = "/Identity/Account/Login";
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
