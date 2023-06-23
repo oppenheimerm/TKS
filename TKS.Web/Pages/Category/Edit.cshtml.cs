@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TKS.Web.UseCases;
-using TKS.Web.UseCases.CategoryUseCase;
-using TKS.Web.ViewModels;
 
 namespace TKS.Web.Pages.Category
 {

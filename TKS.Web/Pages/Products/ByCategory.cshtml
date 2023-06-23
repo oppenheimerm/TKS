@@ -1,14 +1,15 @@
 ﻿@page
-@model TKS.Web.Pages.Products.IndexModel
+@model TKS.Web.Pages.Products.ByCategoryModel
 
 @{
-    ViewData["Title"] = "View all products";
+    ViewData["Title"] = $"View all products by category: {Model.Category.Name}";
 }
 
-<section class="section" id="all_products">
+
+<section class="section" id="products_byCategory">
     <div class="container flex">
-        <p class="section__label touppersection__label">Products</p>
-        <a class="page__links" asp-page="./Create">New</a>
+        <p class="section__label touppersection__label">View products in category: @Model.Category.CategoryDescription</p>
+        @if(@Model.Products != null  && Model.Products.Count >= 1){
         <table class="table table__middle">
             <thead>
                 <tr>
@@ -22,7 +23,8 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.Product)
+
+                @foreach (var item in Model.Products)
                 {
                     <tr>
                         <td>
@@ -55,5 +57,12 @@
 
             </tbody>
         </table>
+        }
+        else{
+            <div class="flex no_products_found_wrapper">
+                <h3>No Products found for category @Model.Category.Name</h3>
+            </div>
+        }
+        
     </div>
 </section>

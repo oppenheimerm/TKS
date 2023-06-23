@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using TKS.Web.Models;
 using TKS.Web.Data;
 using TKS.Web.UseCases;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TKS.Web.Pages.Products
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly IGetAllProductUseCase GetAllProductsUseCase;

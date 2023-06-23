@@ -6,7 +6,7 @@
 }
 
 <section class="section" id="all_products">
-    <div class="allposts__wrap container flex">
+    <div class="container flex">
         <p class="section__label touppersection__label">Products</p>
         <form id="form_edit-create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="All" class="text-danger"></div>
@@ -14,7 +14,7 @@
                 <legend class="form__legend">Add a new product item</legend>
                 <div class="form__margin">
                     <label asp-for="Product.Title" class="control-label"></label>
-                    <input asp-for="Product.Title" class="form__input" placeholder="Prduct title" aria-label="Product title" />
+                    <input asp-for="Product.Title" class="form__input" placeholder="Product title" aria-label="Product title" />
                     <span asp-validation-for="Product.Title" class="text-danger"></span>
                 </div>
                 <div class="form__margin">

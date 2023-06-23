@@ -14,7 +14,7 @@ namespace TKS.Web.Repositories
             Context = context;
         }
 
-        public async Task<(Product? Product, bool Success, string ErrorMessage)>Add(Product product)
+        public async Task<(Product Product, bool Success, string ErrorMessage)>Add(Product product)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace TKS.Web.Repositories
             }
         }
 
-        public async Task<(Product? Product, bool Success, string ErrorMessage)>Update(Product product)
+        public async Task<(Product Product, bool Success, string ErrorMessage)>Update(Product product)
         {
             try {
                 Context.Product.Update(product);
@@ -42,6 +42,34 @@ namespace TKS.Web.Repositories
                 Logger.LogError($"Failed to update product with id: {product.Id} at: {DateTime.UtcNow}");
                 return (product, false, ex.ToString());
             }
+        }
+
+        public async Task<(Product Product, bool Success, string ErrorMessage)>Get(int id)
+        {
+            //var product = await _context.Product.FirstOrDefaultAsync(m => m.Id == id);
+            var product = await Context.Product
+                .Where(p => p.Id == id)
+                .Include(x => x.Photo).ThenInclude(f => f.Folder)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+            if(product != null)
+            {
+                return(product, true, string.Empty);
+            }
+            else
+            {
+                return(new Product(), false, string.Empty);
+            }
+        }
+
+        public async Task<List<Product>> GetProductsByCategory(int categoryId)
+        {
+            return await Context.Product
+                .Include(p => p.Photo).ThenInclude(f => f.Folder)
+                .Include(c => c.Category)
+                .Where( x => x.CategoryId == categoryId)
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<List<Product>> GetAllProducts()

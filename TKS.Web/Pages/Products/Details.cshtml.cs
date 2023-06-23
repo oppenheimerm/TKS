@@ -7,37 +7,38 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using TKS.Web.Models;
 using TKS.Web.Data;
+using TKS.Web.UseCases;
 
 namespace TKS.Web.Pages.Products
 {
     public class DetailsModel : PageModel
     {
-        private readonly TKS.Web.Data.ApplicationDbContext _context;
+        private readonly IGetProductUseCase GetProductUseCase;
 
-        public DetailsModel(TKS.Web.Data.ApplicationDbContext context)
+        public DetailsModel(IGetProductUseCase getProductUseCase)
         {
-            _context = context;
+            GetProductUseCase = getProductUseCase;
         }
 
       public Product Product { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Product == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var product = await _context.Product.FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
+            var product = await GetProductUseCase.ExecuteAsync(id.Value);
+            if (product.Success)
             {
-                return NotFound();
+                Product = product.Product;
+                return Page();
             }
             else 
             {
-                Product = product;
+                return NotFound();
             }
-            return Page();
         }
     }
 }
