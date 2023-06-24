@@ -1,10 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
-using TKS.Core.Models;
+﻿
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TKS.Web.ViewModels
+namespace TKS.Core.Models
 {
-    public class AddProductVM
+    public class Product
     {
+        public int Id { get; set; }
+
         [Required]
         [MaxLength(300, ErrorMessage = "Maximum 300 character limit")]
         public string? Description { get; set; }
@@ -14,19 +17,19 @@ namespace TKS.Web.ViewModels
         public string? Title { get; set; }
 
         [Required]
+        [ForeignKey("Categoy")]
         public int? CategoryId { get; set; }
 
-        public List<Category>? Categories { get; set; }
+        public Category? Category { get; set; }
+        
+        public PhotoEntity? Photo { get; set; }
+        public int? Likes { get; set; }
 
         public DateTime? Created { get; set; } = DateTime.Now;
 
-        [Required]
+        [Column(TypeName = "money")]
         public decimal? Price { get; set; }
 
-        [Required]
-        public IFormFile? Photo { get; set; }
-
-        [Required]
-        public int? StockCount { get; set; }
+        public int? StockCount { get; set; }  = 0;
     }
 }

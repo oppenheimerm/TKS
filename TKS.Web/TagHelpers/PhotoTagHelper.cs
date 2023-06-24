@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Razor.TagHelpers;
-using TKS.Web.Helpers.Imaging;
-using TKS.Web.Models;
+using TKS.Core.Helpers.Imaging;
+using TKS.Core.Models;
 
 namespace TKS.Web.TagHelpers
 {

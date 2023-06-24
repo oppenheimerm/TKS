@@ -1,4 +1,6 @@
-﻿using TKS.Web.Models;
+﻿
+
+using TKS.Core.Models;
 
 namespace TKS.Web.ViewModels
 {
@@ -38,6 +40,20 @@ namespace TKS.Web.ViewModels
                 Created = vm.Created,
                 Price = vm.Price,
                 StockCount = vm.StockCount
+            };
+        }
+
+        public static EditProductVM ToEditProductVM(this Product product)
+        {
+            return new EditProductVM
+            {
+                Id = product.Id,
+                Description = product.Description,
+                Title = product.Title,
+                CategoryId = product.CategoryId,
+                Category = product.Category,
+                Price = product.Price,
+                StockCount = product.StockCount
             };
         }
     }
