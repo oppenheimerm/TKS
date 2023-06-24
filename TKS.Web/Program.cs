@@ -1,12 +1,13 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using TKS.Web.Data;
-using TKS.Web.Helpers.Imaging;
-using TKS.Web.Repositories;
-using TKS.Web.UseCases;
-using TKS.Web.UseCases.CategoryUseCase;
-using TKS.Web.UseCases.Folder;
-using TKS.Web.UseCases.ProductsUseCase;
+using TKS.Core.Helpers.Imaging;
+using TKS.Datastore.EFCore;
+using TKS.UseCases;
+using TKS.UseCases.CategoryUseCase;
+using TKS.UseCases.Folder;
+using TKS.UseCases.ProductsUseCase;
+using TKS.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,26 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+
+//  Add the Authentication Middleware services with the AddAuthentication and AddCookie methods.
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.HttpOnly = true;
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+        options.SlidingExpiration = true;
+        options.AccessDeniedPath = "/Forbidden/";
+        options.LoginPath = "/Account/Login";
+        options.LogoutPath = "/Account/Logout";
+    });
+
+//  Admin folder to prevent unauthorised users being able to access anything in it.
+builder.Services.AddMvc().AddRazorPagesOptions(options => {
+    options.Conventions.AuthorizeFolder("/admin");
+});
+
 builder.Services.AddSingleton<ImageProcessor>();
+builder.Services.AddSingleton<IUserService, UserServices>();
 
 //  Repositories
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -45,41 +65,8 @@ builder.Services.AddScoped<IFolderFileRepository, FolderFileRepository>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddRazorPages();
-
-builder.Services.Configure<IdentityOptions>(options =>
-{
-    // Password settings.
-    options.Password.RequireDigit = true;
-    options.Password.RequireLowercase = true;
-    options.Password.RequireNonAlphanumeric = true;
-    options.Password.RequireUppercase = true;
-    options.Password.RequiredLength = 6;
-    options.Password.RequiredUniqueChars = 1;
-
-    // Lockout settings.
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-    options.Lockout.MaxFailedAccessAttempts = 5;
-    options.Lockout.AllowedForNewUsers = true;
-
-    // User settings.
-    options.User.AllowedUserNameCharacters =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-    options.User.RequireUniqueEmail = true;
-});
-
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    // Cookie settings
-    options.Cookie.HttpOnly = true;
-    options.ExpireTimeSpan = TimeSpan.FromDays(60);
-
-    options.LoginPath = "/Identity/Account/Login";
-    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-    options.SlidingExpiration = true;
-});
 
 
 var app = builder.Build();
@@ -96,8 +83,22 @@ else
     app.UseHsts();
 }
 
+//  Call UseAuthentication
+//  UseAuthorization to set the HttpContext.User property and run the Authorization
+//  Middleware for requests.  UseAuthentication and UseAuthorization must be called
+//  before Map methods such as MapRazorPages and MapDefaultControllerRoute
+app.UseAuthentication();
+
+
+app.MapDefaultControllerRoute();
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+//  make use of a pages that you create to generate error response,
+//  i.e 404, 500...
+app.UseStatusCodePagesWithRedirects("/errors/{0}");
 
 app.UseRouting();
 
